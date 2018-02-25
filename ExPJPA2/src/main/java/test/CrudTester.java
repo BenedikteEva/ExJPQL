@@ -84,8 +84,8 @@ public class CrudTester {
         Query q = em.createQuery("select b  from Book b");
         List<Book> books = q.getResultList();
         for (int i = 0; i < books.size(); i++) {
-            System.out.println("Title " + (i + 1) + ": " + books.get(i).getTitle()+"  type: "
-                    +books.get(i).getClass().getTypeName());
+            System.out.println("Title " + (i + 1) + ": " + books.get(i).getTitle() + "  type: "
+                    + books.get(i).getClass().getTypeName());
         }
         return books;
 
@@ -102,13 +102,11 @@ public class CrudTester {
         return ebooks;
 
     }
-    
-    
-    public Book getBookByTitle(String title){
-        Query q= em.createQuery("select b from Book b where b.title="+title);
-        int bookId = q.getFirstResult();
-        
-        Book b = fetchAllBooks().get(q.getFirstResult());
+
+    public List<Book> getBookByTitle(String title) {
+        Query q = em.createQuery("select b from Book b where b.title=" + title);
+
+        List<Book> b = q.getResultList();
         return b;
     }
 
@@ -123,7 +121,7 @@ public class CrudTester {
             ct.addEbook(9788740461626L, "Considerations of Magic - Philosophical, Personal and Historical ", "BenedikteEva", 10.00, "https://www.saxo.com/dk/considerations-of-magic-philosophical-personal-and-historical_pdf_9788740461626", 1.29);
             ct.addPbook(9781492819523L, "Considerations of Magic - Philosophical, Personal and Historical ", "BenedikteEva", 49.95, 9, 127.56);
             ct.updatePriceByIsbn(59.95, 9788799516520L);
-            
+
             System.out.println("The next is to demonstrate polymorphism and cascade delete\n"
                     + "Please notice that the book from the fetchAllBooks list is removed from both\n"
                     + "the book list and the ebook list because ebook is a subclass of book");
@@ -134,8 +132,9 @@ public class CrudTester {
             ct.fetchAllEBooks();
             //adding the removed book back
             ct.addEbook(9788740461626L, "Considerations of Magic - Philosophical, Personal and Historical ", "BenedikteEva", 10.00, "https://www.saxo.com/dk/considerations-of-magic-philosophical-personal-and-historical_pdf_9788740461626", 1.29);
-            
+            //Get book by title
             System.out.println(ct.getBookByTitle("'Book of Magic in Practice'"));
+            System.out.println(ct.getBookByTitle("'Considerations of Magic - Philosophical, Personal and Historical '"));
         } finally {
             em.close();
         }
