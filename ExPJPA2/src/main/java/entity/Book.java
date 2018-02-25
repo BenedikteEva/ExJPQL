@@ -90,7 +90,7 @@ public abstract class Book implements Serializable {
         
     }
 
-    public void setDownLoadURl(String httpswwwsaxocomdkbookofmagicinpractice_pd) {
+    public void setDownLoadURl(String url) {
       
     }
 

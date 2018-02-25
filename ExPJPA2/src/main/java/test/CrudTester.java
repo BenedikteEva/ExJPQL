@@ -102,6 +102,15 @@ public class CrudTester {
         return ebooks;
 
     }
+    
+    
+    public Book getBookByTitle(String title){
+        Query q= em.createQuery("select b from Book b where b.title="+title);
+        int bookId = q.getFirstResult();
+        
+        Book b = fetchAllBooks().get(q.getFirstResult());
+        return b;
+    }
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ExPJPA2PU");
@@ -125,6 +134,8 @@ public class CrudTester {
             ct.fetchAllEBooks();
             //adding the removed book back
             ct.addEbook(9788740461626L, "Considerations of Magic - Philosophical, Personal and Historical ", "BenedikteEva", 10.00, "https://www.saxo.com/dk/considerations-of-magic-philosophical-personal-and-historical_pdf_9788740461626", 1.29);
+            
+            System.out.println(ct.getBookByTitle("'Book of Magic in Practice'"));
         } finally {
             em.close();
         }
