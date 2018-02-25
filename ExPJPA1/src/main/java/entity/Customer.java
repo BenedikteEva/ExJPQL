@@ -10,6 +10,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,15 +27,38 @@ public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String mail;
-    private String name;
- 
+    public Long id;
+    public String mail;
+    public String name;
+
     @OneToMany(mappedBy = "customer")
-   private Collection <Ordre> orders;
-    
+    private Collection<Ordre> orders;
 
     public Customer() {
+    }
+
+    public Customer(Long id1, String name1, String mail1) {
+    }
+
+    public Customer(String mail, String name) {
+        this.mail = mail;
+        this.name = name;
+
+    }
+
+    public void createCustomer(EntityManager em, Customer c) {
+ 
+        c = new Customer(mail, name);
+        em.persist(c);
+       
+    }
+    
+    public static Customer findCustomerById(EntityManager em, long customerId){
+      
+        Customer c = em.find(Customer.class, customerId);
+      
+        return c;
+        
     }
 
     public Customer(Long id) {
@@ -65,8 +89,6 @@ public class Customer implements Serializable {
         this.name = name;
     }
 
- 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -89,7 +111,9 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Customer[ id=" + id + " ]";
+        return "Customer{" + "id=" + id + ", mail=" + mail + ", name=" + name + '}';
     }
-    
+
+  
+
 }

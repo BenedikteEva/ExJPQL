@@ -5,6 +5,7 @@
  */
 package test;
 
+import entity.Customer;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,6 +15,19 @@ import javax.persistence.Persistence;
  * @author Benedikte
  */
 public class Facade {
-     EntityManagerFactory emf = Persistence.createEntityManagerFactory("ExPJPA2PU");
-    EntityManager em = emf.createEntityManager();
+
+   public void createCustomer(EntityManager em, Customer c){
+       c.createCustomer(em, c);
+   }
+   public Customer findCustomerById(EntityManager em, long id){
+    Customer c = entity.Customer.findCustomerById(em, id);
+    return c;
+   }
+    
+    
+
+    
+    
+
+  
 }
